@@ -1,25 +1,62 @@
 <template>
-  <div>
-    <NavBar />
-    <router-view />
+  <div class="app">
+    <button v-on:click="postTweet">ツイート</button>
+    <!-- 変更点１ -->
+    <div>
+      <p v-for="tweet in tweets" :key="tweet.id">
+        {{ tweet.text }}
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
-import NavBar from "@/components/NavBar.vue"
+import firebase from "firebase"
 
 export default {
-  components: {
-    NavBar,
+  data() {
+    return {
+      /* 変更点１ */
+      tweets: [
+        // {
+        //   id: "0GwoGZuhTNhqHQDBeiVW",
+        //   text: "こんにちは、ツイートの本文です。"
+        // }
+      ],
+    }
+  },
+  methods: {
+    postTweet() {
+      /* 変更点 */
+      const tweet = {
+        text: "こんにちは、ツイートの本文です。",
+      }
+      firebase
+        .firestore()
+        .collection("tweets")
+        .add(tweet)
+        .then((ref) => {
+          this.tweets.push({
+            id: ref.id,
+            ...tweet,
+          })
+        })
+    },
+  },
+  /* 変更点２ */
+  created() {
+    firebase
+      .firestore()
+      .collection("tweets")
+      .get()
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          this.tweets.push({
+            id: doc.id,
+            ...doc.data(),
+          })
+        })
+      })
   },
 }
 </script>
-
-<style>
-* {
-  box-sizing: border-box;
-}
-body {
-  margin: 0;
-}
-</style>
