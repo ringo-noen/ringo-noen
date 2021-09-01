@@ -1,17 +1,40 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div id="nav">
+      <router-link to="/"><div>Home |</div></router-link>
+      <router-link to="/about"><div>About |</div></router-link>
+      <router-link to="/login"><div>ログイン |</div></router-link>
+      <router-link to="/userprofile"><div>ユーザ情報 |</div></router-link>
+      <router-link to="/login"
+        ><div @click="logOut">ログアウト</div></router-link
+      >
+    </div>
+    <router-view />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue"
+import firebase from "firebase"
 
 export default {
-  name: "App",
-  components: {
-    HelloWorld,
+  data() {
+    return {
+      user: null,
+    }
+  },
+  methods: {
+    logOut() {
+      firebase.auth().signOut()
+    },
+  },
+  created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.user = user
+      } else {
+        this.user = null
+      }
+    })
   },
 }
 </script>
@@ -22,7 +45,22 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color#2c3e50;
-  margin-top: 60px;
+  color: #2c3e50;
+}
+
+#nav {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
