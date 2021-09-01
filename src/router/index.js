@@ -1,7 +1,8 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 import Home from "../views/Home.vue"
-import About from "../views/About.vue"
+import TimeLine from "../views/TimeLine.vue"
+import Search from "../views/Search.vue"
 import MyPage from "../views/MyPage.vue"
 
 Vue.use(VueRouter)
@@ -13,9 +14,14 @@ const routes = [
     component: Home,
   },
   {
-    path: "/about",
-    name: "About",
-    component: About,
+    path: "/timeline",
+    name: "TimeLine",
+    component: TimeLine,
+  },
+  {
+    path: "/search",
+    name: "Search",
+    component: Search,
   },
   {
     path: "/my-page",

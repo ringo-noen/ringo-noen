@@ -6,22 +6,46 @@
       placeholder="いまどうしてる？"
     />
     <div class="form__buttons">
-      <button v-on:click="postTweet" class="form__submit-button">投稿</button>
+      <button v-on:click="postTweet" class="form__submit-button">SHARE</button>
+    </div>
+    <div>
+      <p v-for="tweet in tweets" :key="tweet.id">
+        {{ tweet.text }}
+      </p>
     </div>
   </div>
 </template>
 
 <script>
+import firebase from "firebase"
+
 export default {
   data() {
     return {
       text: "",
+      tweets: [],
     }
   },
   methods: {
     postTweet() {
-      alert("投稿機能の完成をお楽しみに！")
+      firebase.firestore().collection("tweets").add({
+        text: this.text,
+      })
     },
+  },
+  created() {
+    firebase
+      .firestore()
+      .collection("tweets")
+      .get()
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          this.tweets.push({
+            id: doc.id,
+            ...doc.data(),
+          })
+        })
+      })
   },
 }
 </script>

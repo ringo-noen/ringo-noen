@@ -1,11 +1,14 @@
 <template>
   <div class="nav__bar">
-    <router-link to="/" class="nav__logo nav__link">GeekTwitter</router-link>
+    <router-link to="/" class="nav__logo nav__link">おにぎりアプリ</router-link>
     <div class="nav__items">
-      <router-link to="/about" class="nav__item nav__link">About</router-link>
-      <router-link to="/my-page" class="nav__item nav__link">
-        MyPage
-      </router-link>
+      <router-link to="/timeline" class="nav__item nav__link"
+        >TIME LINE</router-link
+      >
+      <router-link to="/search" class="nav__item nav__link">SEARCH</router-link>
+      <router-link to="/my-page" class="nav__item nav__link"
+        >MY PAGE</router-link
+      >
     </div>
   </div>
 </template>
