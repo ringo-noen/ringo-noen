@@ -5,13 +5,20 @@
       v-model="text"
       placeholder="いまどうしてる？"
     />
+    <textarea
+      class="form__textarea"
+      v-model="hashtag"
+      placeholder="ハッシュタグを入力"
+    />
     <div class="form__buttons">
       <button v-on:click="postTweet" class="form__submit-button">SHARE</button>
     </div>
     <div>
       <p v-for="tweet in tweets" :key="tweet.id">
-        {{ tweet.text }}
         {{ tweet.username }}
+        {{ tweet.text }}
+        {{ tweet.hashtag }}
+        {{ tweet.date }}
       </p>
     </div>
   </div>
@@ -24,6 +31,7 @@ export default {
   data() {
     return {
       text: "",
+      hashtag: "",
       tweets: [],
       date: "",
       user: "",
@@ -38,6 +46,7 @@ export default {
       this.date = year + "年" + month + "月" + day + "日"
       firebase.firestore().collection("tweets").add({
         text: this.text,
+        hashtag: this.hashtag,
         date: this.date,
         username: this.user.displayName,
       })
