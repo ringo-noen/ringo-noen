@@ -5,6 +5,7 @@
       <router-link to="/about"><div>About |</div></router-link>
       <router-link to="/login"><div>ログイン |</div></router-link>
       <router-link to="/userprofile"><div>ユーザ情報 |</div></router-link>
+      <router-link to="/calendar"><div>おにぎりカレンダー |</div></router-link>
       <router-link to="/login"
         ><div @click="logOut">ログアウト</div></router-link
       >

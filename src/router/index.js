@@ -4,6 +4,7 @@ import Home from "../views/Home.vue"
 import About from "../views/About.vue"
 import Login from "../views/Login.vue"
 import UserProfile from "../views/UserProfile.vue"
+import Calendar from "../views/Calendar.vue"
 import firebase from "firebase"
 
 Vue.use(VueRouter)
@@ -28,6 +29,11 @@ const routes = [
     path: "/userprofile",
     name: "UserProfile",
     component: UserProfile,
+  },
+  {
+    path: "/calendar",
+    name: "Calendar",
+    component: Calendar,
   },
 ]
 

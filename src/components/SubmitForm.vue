@@ -11,6 +11,7 @@
     <div>
       <p v-for="tweet in tweets" :key="tweet.id">
         {{ tweet.text }}
+        {{ tweet.username }}
       </p>
     </div>
   </div>
@@ -24,12 +25,21 @@ export default {
     return {
       text: "",
       tweets: [],
+      date: "",
+      user: "",
     }
   },
   methods: {
     postTweet() {
+      const date = new Date()
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+      const day = date.getDay()
+      this.date = year + "年" + month + "月" + day + "日"
       firebase.firestore().collection("tweets").add({
         text: this.text,
+        date: this.date,
+        username: this.user.displayName,
       })
     },
   },
@@ -46,6 +56,13 @@ export default {
           })
         })
       })
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.user = user
+      } else {
+        this.user = null
+      }
+    })
   },
 }
 </script>
