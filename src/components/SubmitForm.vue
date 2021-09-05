@@ -42,8 +42,11 @@ export default {
       const date = new Date()
       const year = date.getFullYear()
       const month = date.getMonth() + 1
-      const day = date.getDay()
-      this.date = year + "年" + month + "月" + day + "日"
+      const day = date.getDate()
+      const hour = date.getHours()
+      const minute = date.getMinutes()
+      this.date =
+        year + "年" + month + "月" + day + "日" + hour + "時" + minute + "分"
       firebase.firestore().collection("tweets").add({
         text: this.text,
         hashtag: this.hashtag,
