@@ -20,6 +20,12 @@
         {{ tweet.hashtag }}
         {{ tweet.date }}
       </p>
+      <input
+        type="file"
+        accept="image/*"
+        ref="preview"
+        v-on:change="changeFile"
+      />
     </div>
   </div>
 </template>
@@ -35,6 +41,7 @@ export default {
       tweets: [],
       date: "",
       user: "",
+      file: "",
     }
   },
   methods: {
@@ -50,6 +57,12 @@ export default {
         date: this.date,
         username: this.user.displayName,
       })
+    },
+    changeFile(event) {
+      this.file = event.target.files[0]
+      const storageRef = firebase.storage().ref()
+      const fileName = this.file.name
+      const ImagesRef = storageRef.child("images/" + fileName)
     },
   },
   created() {
