@@ -62,6 +62,7 @@ export default {
     firebase
       .firestore()
       .collection("tweets")
+      .orderBy("date", "desc")
       .get()
       .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
