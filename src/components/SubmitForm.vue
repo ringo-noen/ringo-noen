@@ -10,6 +10,12 @@
       v-model="hashtag"
       placeholder="ハッシュタグを入力"
     />
+    <input
+      type="file"
+      accept="image/*"
+      ref="preview"
+      v-on:change="changeFile"
+    />
     <div class="form__buttons">
       <button v-on:click="postTweet" class="form__submit-button">SHARE</button>
     </div>
@@ -20,12 +26,6 @@
         {{ tweet.hashtag }}
         {{ tweet.date }}
       </p>
-      <input
-        type="file"
-        accept="image/*"
-        ref="preview"
-        v-on:change="changeFile"
-      />
     </div>
   </div>
 </template>
@@ -41,7 +41,7 @@ export default {
       tweets: [],
       date: "",
       user: "",
-      file: "",
+      fileURL: "",
     }
   },
   methods: {
@@ -56,13 +56,21 @@ export default {
         hashtag: this.hashtag,
         date: this.date,
         username: this.user.displayName,
+        fileURL: this.fileURL,
       })
     },
     changeFile(event) {
-      this.file = event.target.files[0]
+      let file = event.target.files[0]
+      console.log(file)
       const storageRef = firebase.storage().ref()
-      const fileName = this.file.name
+      const fileName = file.name
       const ImagesRef = storageRef.child("images/" + fileName)
+      ImagesRef.put(file).then(function () {
+        console.log("アップロード成功したよ!")
+      })
+      ImagesRef.getDownloadURL().then(function (downloadURL) {
+        console.log(downloadURL)
+      })
     },
   },
   created() {
