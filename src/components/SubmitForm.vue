@@ -24,7 +24,7 @@
         {{ tweet.text }}
         {{ tweet.place }}
         {{ tweet.hashtag }}
-        {{ tweet.date }}
+        {{ tweet.datetime }}
       </p>
     </div>
   </div>
@@ -40,6 +40,7 @@ export default {
       place: "@",
       hashtag: "#",
       tweets: [],
+      datetime: "",
       date: "",
       user: "",
     }
@@ -52,8 +53,9 @@ export default {
       const day = date.getDate()
       const hour = date.getHours()
       const minute = date.getMinutes()
-      this.date =
+      this.datetime =
         year + "年" + month + "月" + day + "日" + hour + "時" + minute + "分"
+      this.date = year + "年" + month + "月" + day + "日"
       firebase
         .firestore()
         .collection("tweets")
@@ -61,6 +63,7 @@ export default {
           text: this.text,
           place: this.place,
           hashtag: this.hashtag,
+          datetime: this.datetime,
           date: this.date,
           username: this.user.displayName,
         })
@@ -68,15 +71,12 @@ export default {
           this.$router.go({ path: this.$router.currentRoute.path, force: true })
         })
     },
-    deleteTodo(index) {
-      this.todos.splice(index, 1)
-    },
   },
   created() {
     firebase
       .firestore()
       .collection("tweets")
-      .orderBy("date", "desc")
+      .orderBy("datetime", "desc")
       .get()
       .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
