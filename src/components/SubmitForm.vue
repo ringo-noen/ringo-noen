@@ -3,12 +3,17 @@
     <textarea
       class="form__textarea"
       v-model="text"
-      placeholder="いまどうしてる？"
+      placeholder="どんなおにぎり？"
+    />
+    <textarea
+      class="form__textarea"
+      v-model="place"
+      placeholder="どこのおにぎり？"
     />
     <textarea
       class="form__textarea"
       v-model="hashtag"
-      placeholder="ハッシュタグを入力"
+      placeholder="ハッシュタグを入れてね"
     />
     <input
       type="file"
@@ -24,8 +29,9 @@
         {{ tweet.username }}
         <img v-bind:src="tweet.fileURL" class="tweet_image" />
         {{ tweet.text }}
+        {{ tweet.place }}
         {{ tweet.hashtag }}
-        {{ tweet.date }}
+        {{ tweet.datetime }}
       </p>
     </div>
   </div>
@@ -38,8 +44,10 @@ export default {
   data() {
     return {
       text: "",
-      hashtag: "",
+      place: "@",
+      hashtag: "#",
       tweets: [],
+      datetime: "",
       date: "",
       user: "",
       fileURL: "",
@@ -50,8 +58,13 @@ export default {
       const date = new Date()
       const year = date.getFullYear()
       const month = date.getMonth() + 1
-      const day = date.getDay()
+      const day = date.getDate()
+      const hour = date.getHours()
+      const minute = date.getMinutes()
+      this.datetime =
+        year + "年" + month + "月" + day + "日" + hour + "時" + minute + "分"
       this.date = year + "年" + month + "月" + day + "日"
+<<<<<<< HEAD
       firebase.firestore().collection("tweets").add({
         text: this.text,
         hashtag: this.hashtag,
@@ -72,12 +85,29 @@ export default {
       ImagesRef.getDownloadURL().then(function (downloadURL) {
         self.fileURL = downloadURL
       })
+=======
+      firebase
+        .firestore()
+        .collection("tweets")
+        .add({
+          text: this.text,
+          place: this.place,
+          hashtag: this.hashtag,
+          datetime: this.datetime,
+          date: this.date,
+          username: this.user.displayName,
+        })
+        .then(() => {
+          this.$router.go({ path: this.$router.currentRoute.path, force: true })
+        })
+>>>>>>> jikann2
     },
   },
   created() {
     firebase
       .firestore()
       .collection("tweets")
+      .orderBy("datetime", "desc")
       .get()
       .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
