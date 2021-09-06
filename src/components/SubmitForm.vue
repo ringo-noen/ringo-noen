@@ -22,6 +22,7 @@
     <div>
       <p v-for="tweet in tweets" :key="tweet.id">
         {{ tweet.username }}
+        <img v-bind:src="tweet.fileURL" class="tweet_image" />
         {{ tweet.text }}
         {{ tweet.hashtag }}
         {{ tweet.date }}
@@ -59,17 +60,17 @@ export default {
         fileURL: this.fileURL,
       })
     },
-    changeFile(event) {
+    async changeFile(event) {
+      let self = this
       let file = event.target.files[0]
-      console.log(file)
       const storageRef = firebase.storage().ref()
       const fileName = file.name
       const ImagesRef = storageRef.child("images/" + fileName)
-      ImagesRef.put(file).then(function () {
+      await ImagesRef.put(file).then(function () {
         console.log("アップロード成功したよ!")
       })
       ImagesRef.getDownloadURL().then(function (downloadURL) {
-        console.log(downloadURL)
+        self.fileURL = downloadURL
       })
     },
   },
@@ -116,5 +117,9 @@ export default {
 .form__buttons {
   display: flex;
   justify-content: flex-end;
+}
+.tweet_image {
+  width: 100px;
+  height: 100px;
 }
 </style>
