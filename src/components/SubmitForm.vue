@@ -38,7 +38,7 @@ export default {
     return {
       text: "",
       place: "@",
-      hashtag: "",
+      hashtag: "#",
       tweets: [],
       date: "",
       user: "",
@@ -54,13 +54,19 @@ export default {
       const minute = date.getMinutes()
       this.date =
         year + "年" + month + "月" + day + "日" + hour + "時" + minute + "分"
-      firebase.firestore().collection("tweets").add({
-        text: this.text,
-        place: this.place,
-        hashtag: this.hashtag,
-        date: this.date,
-        username: this.user.displayName,
-      })
+      firebase
+        .firestore()
+        .collection("tweets")
+        .add({
+          text: this.text,
+          place: this.place,
+          hashtag: this.hashtag,
+          date: this.date,
+          username: this.user.displayName,
+        })
+        .then(() => {
+          this.$router.go({ path: this.$router.currentRoute.path, force: true })
+        })
     },
     deleteTodo(index) {
       this.todos.splice(index, 1)
