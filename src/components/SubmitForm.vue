@@ -64,7 +64,6 @@ export default {
       this.datetime =
         year + "年" + month + "月" + day + "日" + hour + "時" + minute + "分"
       this.date = year + "年" + month + "月" + day + "日"
-<<<<<<< HEAD
       firebase.firestore().collection("tweets").add({
         text: this.text,
         hashtag: this.hashtag,
@@ -85,7 +84,6 @@ export default {
       ImagesRef.getDownloadURL().then(function (downloadURL) {
         self.fileURL = downloadURL
       })
-=======
       firebase
         .firestore()
         .collection("tweets")
@@ -100,7 +98,6 @@ export default {
         .then(() => {
           this.$router.go({ path: this.$router.currentRoute.path, force: true })
         })
->>>>>>> jikann2
     },
   },
   created() {
