@@ -54,6 +54,9 @@ export default {
         username: this.user.displayName,
       })
     },
+    deleteTodo(index) {
+      this.todos.splice(index, 1)
+    },
   },
   created() {
     firebase
