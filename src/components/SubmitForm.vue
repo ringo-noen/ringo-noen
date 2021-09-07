@@ -70,6 +70,7 @@ export default {
         .add({
           text: this.text,
           hashtag: this.hashtag,
+          datetime: this.datetime,
           date: this.date,
           username: this.user.displayName,
           fileURL: this.fileURL,
