@@ -1,30 +1,40 @@
 <template>
-  <div class="calendar-box">
-    <h2>{{ displayDate }}</h2>
-    <div class="button-area">
-      <button @click="prevMonth">前の月</button>
-      <button @click="nextMonth">次の月</button>
-    </div>
-    <div class="calendar">
-      <div class="calendar-weekly">
-        <div class="calendar-youbi" v-for="n in 7" :key="n">
-          {{ youbi(n - 1) }}
-        </div>
+  <div class="content-box">
+    <div class="count">
+      <div v-if="tweets.length <= 100">
+        <vue-justgage ref="g1" id="g1" class="gauge"></vue-justgage>
       </div>
-      <div
-        v-for="(week, index) in calendars"
-        :key="index"
-        class="calendar-weekly"
-      >
+      <div v-else>
+        <vue-justgage ref="g2" id="g2" class="gauge"></vue-justgage>
+      </div>
+    </div>
+    <div class="calendar-box">
+      <h2>{{ displayDate }}</h2>
+      <div class="button-area">
+        <button @click="prevMonth">前の月</button>
+        <button @click="nextMonth">次の月</button>
+      </div>
+      <div class="calendar">
+        <div class="calendar-weekly">
+          <div class="calendar-youbi" v-for="n in 7" :key="n">
+            {{ youbi(n - 1) }}
+          </div>
+        </div>
         <div
-          v-for="(day, index) in week"
+          v-for="(week, index) in calendars"
           :key="index"
-          class="calendar-daily"
-          :class="{ outside: currentMonth !== day.month }"
+          class="calendar-weekly"
         >
-          <div class="calendar-day">
-            {{ day.day }}<br />
-            投稿数：{{ day.count }}<br />
+          <div
+            v-for="(day, index) in week"
+            :key="index"
+            class="calendar-daily"
+            :class="{ outside: currentMonth !== day.month }"
+          >
+            <div class="calendar-day">
+              {{ day.day }}<br />
+              投稿数：{{ day.count }}<br />
+            </div>
           </div>
         </div>
       </div>
@@ -35,6 +45,9 @@
 <script>
 import moment from "moment"
 import firebase from "firebase"
+import Vue from "vue"
+import vueJustgage from "vue-justgage"
+Vue.use(vueJustgage)
 
 export default {
   data() {
@@ -42,6 +55,22 @@ export default {
       currentDate: moment(),
       tweets: [],
       calc_date_dict: {},
+      dflt1: {
+        min: 0,
+        max: 100,
+        donut: false,
+        gaugeWidthScale: 0.6,
+        counter: true,
+        hideInnerShadow: true,
+      },
+      dflt2: {
+        min: 0,
+        max: 1000,
+        donut: false,
+        gaugeWidthScale: 0.6,
+        counter: true,
+        hideInnerShadow: true,
+      },
     }
   },
   methods: {
@@ -143,6 +172,24 @@ export default {
             ...doc.data(),
           })
         })
+      })
+      .then(() => {
+        var g1 = this.$refs.g1.draw({
+          id: "g1",
+          value: this.tweets.length,
+          title: "総投稿数",
+          defaults: this.dflt1,
+        })
+        console.log(g1)
+      })
+      .then(() => {
+        var g2 = this.$refs.g2.draw({
+          id: "g2",
+          value: this.tweets.length,
+          title: "総投稿数",
+          defaults: this.dflt2,
+        })
+        console.log(g2)
       })
   },
 }
