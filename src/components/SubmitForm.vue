@@ -64,13 +64,20 @@ export default {
       this.datetime =
         year + "年" + month + "月" + day + "日" + hour + "時" + minute + "分"
       this.date = year + "年" + month + "月" + day + "日"
-      firebase.firestore().collection("tweets").add({
-        text: this.text,
-        hashtag: this.hashtag,
-        date: this.date,
-        username: this.user.displayName,
-        fileURL: this.fileURL,
-      })
+      firebase
+        .firestore()
+        .collection("tweets")
+        .add({
+          text: this.text,
+          hashtag: this.hashtag,
+          datetime: this.datetime,
+          date: this.date,
+          username: this.user.displayName,
+          fileURL: this.fileURL,
+        })
+        .then(() => {
+          this.$router.go({ path: this.$router.currentRoute.path, force: true })
+        })
     },
     async changeFile(event) {
       let self = this
@@ -84,20 +91,6 @@ export default {
       ImagesRef.getDownloadURL().then(function (downloadURL) {
         self.fileURL = downloadURL
       })
-      firebase
-        .firestore()
-        .collection("tweets")
-        .add({
-          text: this.text,
-          place: this.place,
-          hashtag: this.hashtag,
-          datetime: this.datetime,
-          date: this.date,
-          username: this.user.displayName,
-        })
-        .then(() => {
-          this.$router.go({ path: this.$router.currentRoute.path, force: true })
-        })
     },
   },
   created() {
