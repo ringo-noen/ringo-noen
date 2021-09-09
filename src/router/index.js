@@ -1,7 +1,7 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 import Home from "../views/Home.vue"
-import About from "../views/About.vue"
+import Share from "../views/Share.vue"
 import Login from "../views/Login.vue"
 import UserProfile from "../views/UserProfile.vue"
 import Calendar from "../views/Calendar.vue"
@@ -16,9 +16,9 @@ const routes = [
     component: Home,
   },
   {
-    path: "/about",
-    name: "About",
-    component: About,
+    path: "/share",
+    name: "Share",
+    component: Share,
   },
   {
     path: "/login",

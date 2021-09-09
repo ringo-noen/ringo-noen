@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/"><div>Home |</div></router-link>
-      <router-link to="/about"><div>About |</div></router-link>
+      <router-link to="/share"><div>Share |</div></router-link>
       <router-link to="/login"><div>ログイン |</div></router-link>
       <router-link to="/userprofile"><div>ユーザ情報 |</div></router-link>
       <router-link to="/calendar"><div>おにぎりカレンダー |</div></router-link>

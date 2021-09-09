@@ -1,19 +1,19 @@
 <template>
   <div class="home">
-    <SubmitForm />
+    <TimeLine />
     <Search />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import SubmitForm from "@/components/SubmitForm.vue"
+import TimeLine from "@/components/TimeLine.vue"
 import Search from "@/components/Search.vue"
 
 export default {
   name: "Home",
   components: {
-    SubmitForm,
+    TimeLine,
     Search,
   },
 }
