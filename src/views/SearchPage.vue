@@ -1,5 +1,14 @@
 <template>
   <div>
-    <h1>This is Search Vue</h1>
+    <Search />
   </div>
 </template>
+<script>
+import Search from "@/components/Search.vue"
+
+export default {
+  components: {
+    Search,
+  },
+}
+</script>
