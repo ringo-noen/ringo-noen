@@ -16,7 +16,7 @@
             <div class="main-page-content">
               <router-link to="/">
                 <div class="onigiri-link">
-                  <img src="@/assets/おにぎり2.jpeg" />
+                  <img src="@/assets/おにぎり.png" />
                 </div>
                 <div class="text-link">Home</div>
                 <div></div>
@@ -25,25 +25,25 @@
             <div class="main-page-content">
               <router-link to="/share">
                 <div class="onigiri-link">
-                  <img src="@/assets/おにぎり2.jpeg" />
+                  <img src="@/assets/おにぎり.png" />
                 </div>
-                <div class="text-link">SHARE</div>
+                <div class="text-link">Post</div>
               </router-link>
             </div>
             <div class="main-page-content">
               <router-link to="/calendar">
                 <div class="onigiri-link">
-                  <img src="@/assets/おにぎり2.jpeg" />
+                  <img src="@/assets/おにぎり.png" />
                 </div>
                 <div class="text-link">Calendar</div></router-link
               >
             </div>
             <div class="main-page-content">
-              <router-link to="/search">
+              <router-link to="/searchpage">
                 <div class="onigiri-link">
-                  <img src="@/assets/おにぎり2.jpeg" />
+                  <img src="@/assets/おにぎり.png" />
                 </div>
-                <div class="text-link">SEARCH</div>
+                <div class="text-link">Search</div>
               </router-link>
             </div>
           </div>
@@ -163,8 +163,8 @@ export default {
   text-align: center;
 }
 .onigiri-link img {
-  width: 90%;
-  height: 90%;
+  width: 7.5vw;
+  height: 7vw;
   object-fit: cover;
 }
 .text-link {

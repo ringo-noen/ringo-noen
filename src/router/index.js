@@ -5,7 +5,7 @@ import Share from "../views/Share.vue"
 import Login from "../views/Login.vue"
 import UserProfile from "../views/UserProfile.vue"
 import Calendar from "../views/Calendar.vue"
-import Search from "../views/Search.vue"
+import SearchPage from "../views/SearchPage.vue"
 import firebase from "firebase"
 
 Vue.use(VueRouter)
@@ -37,9 +37,9 @@ const routes = [
     component: Calendar,
   },
   {
-    path: "/search",
-    name: "Search",
-    component: Search,
+    path: "/searchpage",
+    name: "SearchPage",
+    component: SearchPage,
   },
 ]
 
