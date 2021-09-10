@@ -2,7 +2,10 @@
   <div class="main-box">
     <div class="header-content">
       <div class="header-left-content">
-        <img src="@/assets/富士山イラスト.jpg" />
+        <div v-if="tweets.length < 100">
+          <img src="@/assets/富士山イラスト.jpg" />
+        </div>
+        <div v-else><img src="@/assets/富士山.jpg" /></div>
       </div>
       <div class="header-right-content">
         <div class="header-right-top-content">
@@ -13,7 +16,7 @@
             <div class="main-page-content">
               <router-link to="/">
                 <div class="onigiri-link">
-                  <img src="@/assets/おにぎり0.jpg" />
+                  <img src="@/assets/おにぎり2.jpeg" />
                 </div>
                 <div class="text-link">Home</div>
                 <div></div>
@@ -22,7 +25,7 @@
             <div class="main-page-content">
               <router-link to="/share">
                 <div class="onigiri-link">
-                  <img src="@/assets/おにぎり0.jpg" />
+                  <img src="@/assets/おにぎり2.jpeg" />
                 </div>
                 <div class="text-link">SHARE</div>
               </router-link>
@@ -30,7 +33,7 @@
             <div class="main-page-content">
               <router-link to="/calendar">
                 <div class="onigiri-link">
-                  <img src="@/assets/おにぎり0.jpg" />
+                  <img src="@/assets/おにぎり2.jpeg" />
                 </div>
                 <div class="text-link">Calendar</div></router-link
               >
@@ -38,7 +41,7 @@
             <div class="main-page-content">
               <router-link to="/search">
                 <div class="onigiri-link">
-                  <img src="@/assets/おにぎり0.jpg" />
+                  <img src="@/assets/おにぎり2.jpeg" />
                 </div>
                 <div class="text-link">SEARCH</div>
               </router-link>
@@ -51,16 +54,12 @@
               >
             </div>
             <div class="sub-page-content">
-              <router-link to="/login"
-                ><div class="sub-page">ログイン</div></router-link
-              >
-            </div>
-            <div class="sub-page-content">
-              <router-link to="/login"
-                ><div @click="logOut" class="sub-page">
+              <router-link to="/login">
+                <div class="sub-page" v-if="user === null">ログイン</div>
+                <div @click="logOut" class="sub-page" v-if="user">
                   ログアウト
-                </div></router-link
-              >
+                </div>
+              </router-link>
             </div>
           </div>
         </div>
@@ -77,6 +76,7 @@ export default {
   data() {
     return {
       user: null,
+      tweets: [],
     }
   },
   methods: {
@@ -92,6 +92,19 @@ export default {
         this.user = null
       }
     })
+    firebase
+      .firestore()
+      .collection("tweets")
+      .orderBy("datetime", "desc")
+      .get()
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          this.tweets.push({
+            id: doc.id,
+            ...doc.data(),
+          })
+        })
+      })
   },
 }
 </script>
@@ -107,9 +120,9 @@ export default {
   height: 100%;
 }
 .header-left-content img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 35vw;
+  height: 35vh;
+  /* object-fit: cover; */
 }
 .header-right-content {
   width: 65%;
@@ -199,7 +212,7 @@ export default {
 }
 .sub-page-content {
   display: block;
-  height: 25%;
-  margin-top: 5%;
+  height: 30%;
+  margin-top: 10%;
 }
 </style>
