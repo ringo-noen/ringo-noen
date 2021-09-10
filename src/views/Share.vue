@@ -1,5 +1,6 @@
 <template>
-  <div class="form__wrapper">
+  <div class="Share">
+    <h1>This is an Share page</h1>
     <textarea
       class="form__textarea"
       v-model="text"
@@ -23,16 +24,6 @@
     />
     <div class="form__buttons">
       <button v-on:click="postTweet" class="form__submit-button">SHARE</button>
-    </div>
-    <div>
-      <p v-for="tweet in tweets" :key="tweet.id">
-        {{ tweet.username }}
-        <img v-bind:src="tweet.fileURL" class="tweet_image" />
-        {{ tweet.text }}
-        {{ tweet.place }}
-        {{ tweet.hashtag }}
-        {{ tweet.datetime }}
-      </p>
     </div>
   </div>
 </template>
@@ -94,19 +85,6 @@ export default {
     },
   },
   created() {
-    firebase
-      .firestore()
-      .collection("tweets")
-      .orderBy("datetime", "desc")
-      .get()
-      .then((snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          this.tweets.push({
-            id: doc.id,
-            ...doc.data(),
-          })
-        })
-      })
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.user = user

@@ -1,39 +1,83 @@
 <template>
   <div class="content-box">
-    <div class="count">
-      <div v-if="tweets.length <= 100">
-        <vue-justgage ref="g1" id="g1" class="gauge"></vue-justgage>
-      </div>
-      <div v-else>
-        <vue-justgage ref="g2" id="g2" class="gauge"></vue-justgage>
-      </div>
-    </div>
-    <div class="calendar-box">
-      <h2>{{ displayDate }}</h2>
-      <div class="button-area">
-        <button @click="prevMonth">前の月</button>
-        <button @click="nextMonth">次の月</button>
-      </div>
-      <div class="calendar">
-        <div class="calendar-weekly">
-          <div class="calendar-youbi" v-for="n in 7" :key="n">
-            {{ youbi(n - 1) }}
+    <div class="calendar-left-box">
+      <div class="calendar-box">
+        <div class="calendar-title">{{ displayDate }}</div>
+        <div class="button-area">
+          <button @click="prevMonth">前の月</button>
+          <button @click="nextMonth">次の月</button>
+        </div>
+        <div class="calendar">
+          <div class="calendar-weekly">
+            <div class="calendar-youbi" v-for="n in 7" :key="n">
+              {{ youbi(n - 1) }}
+            </div>
+          </div>
+          <div
+            v-for="(week, index) in calendars"
+            :key="index"
+            class="calendar-weekly"
+          >
+            <div
+              v-for="(day, index) in week"
+              :key="index"
+              class="calendar-daily"
+              :class="{ outside: currentMonth !== day.month }"
+            >
+              <div class="calendar-day">
+                <div class="calendar-day-day">{{ day.day }}</div>
+                <br />
+                <div class="calendar-day-count" v-if="day.count > 0">
+                  <div class="calendar-day-count-img">
+                    <!-- <img src="@/assets/おにぎり2.jpeg" /> -->
+                    🍙
+                  </div>
+                  ×{{ day.count }}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div
-          v-for="(week, index) in calendars"
-          :key="index"
-          class="calendar-weekly"
-        >
-          <div
-            v-for="(day, index) in week"
-            :key="index"
-            class="calendar-daily"
-            :class="{ outside: currentMonth !== day.month }"
-          >
-            <div class="calendar-day">
-              {{ day.day }}<br />
-              投稿数：{{ day.count }}<br />
+      </div>
+    </div>
+    <div class="calendar-right-box">
+      <div class="calendar-right-top-box">
+        <div class="count">
+          <div class="count-title">現在のユーザ全体の総投稿数は...</div>
+          <div class="count-graph" v-if="tweets.length <= 100">
+            <vue-justgage
+              ref="g1"
+              id="g1"
+              width="50%"
+              class="gauge"
+            ></vue-justgage>
+          </div>
+          <div class="count-graph" v-else>
+            <vue-justgage
+              ref="g2"
+              id="g2"
+              width="50%"
+              class="gauge"
+            ></vue-justgage>
+          </div>
+        </div>
+      </div>
+      <div class="calendar-right-bottom-box">
+        <div class="calendar-right-bottom-left-box">
+          <div class="calendar-right-bottom-left-content">
+            <div class="calendar-right-bottom-left-title">
+              現在のランクは...
+            </div>
+            <div class="calendar-right-bottom-img">
+              <img src="@/assets/富士山イラスト.jpg" />
+            </div>
+          </div>
+        </div>
+        <div class="calendar-right-bottom-right-box">
+          <div class="calendar-right-bottom-right-content">
+            <div class="calendar-right-bottom-right-title">次のランクは...</div>
+            <div class="calendar-right-bottom-img">
+              <img src="@/assets/富士山.jpg" />
             </div>
           </div>
         </div>
@@ -196,19 +240,45 @@ export default {
 </script>
 
 <style>
+.content-box {
+  display: flex;
+}
+.calendar-left-box {
+  width: 55vw;
+  height: 70vh;
+  padding-left: 5rem;
+}
+.calendar-right-box {
+  width: 30vw;
+  height: 70vh;
+  padding-right: 5vw;
+}
 .calendar-box {
-  margin: 2em auto;
-  width: 900px;
+  /* margin: 2em auto; */
+  padding: 3%;
+  width: 80%;
 }
 .button-area {
-  margin: 0.5em 0;
+  display: flex;
+  justify-content: space-between;
 }
-.button {
-  padding: 4px 8px;
-  margin-right: 8px;
+.calendar-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  justify-content: center;
+}
+.calendar-box button {
+  width: 6rem;
+  height: 3rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  background-color: rgb(170, 241, 136);
 }
 .calendar {
-  max-width: 900px;
+  /* max-width: 57rem; */
+  max-width: 100%;
+  /* min-width: 50rem; */
   border-top: 1px solid #e0e0e0;
   font-size: 0.8em;
 }
@@ -217,6 +287,9 @@ export default {
   border-right: 1px solid #e0e0e0;
   margin-right: -1px;
   text-align: center;
+  background-color: aquamarine;
+  font-size: 1rem;
+  font-weight: bold;
 }
 .calendar-weekly {
   display: flex;
@@ -224,7 +297,8 @@ export default {
 }
 .calendar-daily {
   flex: 1;
-  min-height: 125px;
+  min-height: 6rem;
+  min-width: 6rem;
   border-right: 1px solid #e0e0e0;
   border-bottom: 1px solid #e0e0e0;
   margin-right: -1px;
@@ -232,8 +306,77 @@ export default {
 .calendar-day {
   text-align: center;
 }
+.calendar-day-day {
+  font-weight: bold;
+  font-size: 1rem;
+}
 .outside {
   background-color: #f7f7f7;
   border-left: 1px solid #e0e0e0;
+}
+.calendar-right-top-box {
+  width: 100%;
+  height: 40vh;
+}
+.calendar-right-bottom-box {
+  display: block;
+  justify-content: space-between;
+  width: 100%;
+  height: 50%;
+}
+.calendar-right-bottom-box {
+  display: flex;
+  justify-content: space-between;
+}
+.calendar-right-bottom-left-box {
+  display: flex;
+  justify-content: space-between;
+  width: 20vw;
+  height: 100%;
+}
+.calendar-right-bottom-right-box {
+  display: block;
+  justify-content: space-between;
+  width: 20vw;
+  height: 100%;
+}
+.calendar-right-bottom-left-content {
+  display: block;
+  justify-content: space-between;
+  width: 90%;
+  height: 80%;
+}
+.calendar-right-bottom-right-content {
+  display: block;
+  justify-content: space-between;
+  width: 90%;
+  height: 80%;
+}
+.calendar-right-bottom-left-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.calendar-right-bottom-right-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.calendar-right-bottom-left-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.calendar-right-bottom-right-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.count-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 3rem;
+  text-align: center;
+}
+.count-graph {
+  padding: 3%;
 }
 </style>
