@@ -61,6 +61,7 @@ export default {
         .add({
           text: this.text,
           hashtag: this.hashtag,
+          place: this.place,
           datetime: this.datetime,
           date: this.date,
           username: this.user.displayName,
