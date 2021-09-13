@@ -89,7 +89,15 @@ export default {
       const hour = date.getHours()
       const minute = date.getMinutes()
       this.datetime =
-        year + "年" + month + "月" + day + "日" + hour + "時" + minute + "分"
+        this.zeroPadding(year, 4) +
+        "年" +
+        this.zeroPadding(month, 2) +
+        "月" +
+        this.zeroPadding(day, 2) +
+        "日 " +
+        this.zeroPadding(hour, 2) +
+        ":" +
+        this.zeroPadding(minute, 2)
       this.date = year + "年" + month + "月" + day + "日"
       firebase
         .firestore()
@@ -97,6 +105,7 @@ export default {
         .add({
           text: this.text,
           hashtag: this.hashtag,
+          place: this.place,
           datetime: this.datetime,
           date: this.date,
           username: this.user.displayName,
@@ -118,6 +127,13 @@ export default {
       ImagesRef.getDownloadURL().then(function (downloadURL) {
         self.fileURL = downloadURL
       })
+    },
+    zeroPadding: function (num, len) {
+      let zero = ""
+      for (var i = 0; i < len; i++) {
+        zero += "0"
+      }
+      return (zero + num).slice(-len)
     },
   },
   created() {
