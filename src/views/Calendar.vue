@@ -48,45 +48,47 @@
               <div class="count">
                 <div class="count-title">現在のユーザ全体の総投稿数は...</div>
                 <!-- <div class="count-text">{{ tweets.length }}</div> -->
-                <div class="count-graph" v-if="tweets.length <= 100">
-                  <vue-justgage
-                    ref="g1"
-                    id="g1"
-                    width="30%"
-                    class="gauge"
-                  ></vue-justgage>
-                </div>
-                <div class="count-graph" v-else-if="tweets.length <= 200">
-                  <vue-justgage
-                    ref="g2"
-                    id="g2"
-                    width="30%"
-                    class="gauge"
-                  ></vue-justgage>
-                </div>
-                <div class="count-graph" v-else-if="tweets.length <= 300">
-                  <vue-justgage
-                    ref="g3"
-                    id="g3"
-                    width="30%"
-                    class="gauge"
-                  ></vue-justgage>
-                </div>
-                <div class="count-graph" v-else-if="tweets.length <= 400">
-                  <vue-justgage
-                    ref="g4"
-                    id="g4"
-                    width="30%"
-                    class="gauge"
-                  ></vue-justgage>
-                </div>
-                <div class="count-graph" v-else>
-                  <vue-justgage
-                    ref="g5"
-                    id="g5"
-                    width="30%"
-                    class="gauge"
-                  ></vue-justgage>
+                <div class="count-graph">
+                  <div v-if="tweets.length < 100">
+                    <vue-justgage
+                      ref="g1"
+                      id="g1"
+                      width="30%"
+                      class="gauge"
+                    ></vue-justgage>
+                  </div>
+                  <div v-else-if="tweets.length < 200">
+                    <vue-justgage
+                      ref="g2"
+                      id="g2"
+                      width="30%"
+                      class="gauge"
+                    ></vue-justgage>
+                  </div>
+                  <div v-else-if="tweets.length < 300">
+                    <vue-justgage
+                      ref="g3"
+                      id="g3"
+                      width="30%"
+                      class="gauge"
+                    ></vue-justgage>
+                  </div>
+                  <div v-else-if="tweets.length < 400">
+                    <vue-justgage
+                      ref="g4"
+                      id="g4"
+                      width="30%"
+                      class="gauge"
+                    ></vue-justgage>
+                  </div>
+                  <div v-else>
+                    <vue-justgage
+                      ref="g5"
+                      id="g5"
+                      width="30%"
+                      class="gauge"
+                    ></vue-justgage>
+                  </div>
                 </div>
               </div>
             </div>
@@ -160,7 +162,7 @@
                   v-else-if="tweets.length < 200"
                 >
                   <div class="calendar-right-bottom-right-title">
-                    次のランクは：エベレスト
+                    次のランク：エベレスト
                   </div>
                   <div class="calendar-right-bottom-img">
                     <img src="@/assets/エベレスト.jpg" />
@@ -341,6 +343,39 @@ export default {
     currentMonth() {
       return this.currentDate.format("YYYY-MM")
     },
+    drawCount() {
+      let g1 = this.$refs.g1.draw({
+        id: "g1",
+        value: this.tweets.length,
+        title: "総投稿数",
+        defaults: this.dflt1,
+      })
+      let g2 = this.$refs.g2.draw({
+        id: "g2",
+        value: this.tweets.length,
+        title: "総投稿数",
+        defaults: this.dflt2,
+      })
+      let g3 = this.$refs.g3.draw({
+        id: "g3",
+        value: this.tweets.length,
+        title: "総投稿数",
+        defaults: this.dflt3,
+      })
+      let g4 = this.$refs.g4.draw({
+        id: "g4",
+        value: this.tweets.length,
+        title: "総投稿数",
+        defaults: this.dflt4,
+      })
+      let g5 = this.$refs.g5.draw({
+        id: "g5",
+        value: this.tweets.length,
+        title: "総投稿数",
+        defaults: this.dflt5,
+      })
+      return g1, g2, g3, g4, g5
+    },
   },
   created() {
     firebase
@@ -356,22 +391,47 @@ export default {
         })
       })
       .then(() => {
-        var g1 = this.$refs.g1.draw({
-          id: "g1",
-          value: this.tweets.length,
-          title: "総投稿数",
-          defaults: this.dflt1,
-        })
-        console.log(g1)
-      })
-      .then(() => {
-        var g2 = this.$refs.g2.draw({
-          id: "g2",
-          value: this.tweets.length,
-          title: "総投稿数",
-          defaults: this.dflt2,
-        })
-        console.log(g2)
+        if (this.tweets.length < 100) {
+          let g1 = this.$refs.g1.draw({
+            id: "g1",
+            value: this.tweets.length,
+            title: "総投稿数",
+            defaults: this.dflt1,
+          })
+          console.log(g1)
+        } else if (this.tweets.length < 200) {
+          let g2 = this.$refs.g2.draw({
+            id: "g2",
+            value: this.tweets.length,
+            title: "総投稿数",
+            defaults: this.dflt2,
+          })
+          console.log(g2)
+        } else if (this.tweets.length < 300) {
+          let g3 = this.$refs.g3.draw({
+            id: "g3",
+            value: this.tweets.length,
+            title: "総投稿数",
+            defaults: this.dflt3,
+          })
+          console.log(g3)
+        } else if (this.tweets.length < 400) {
+          let g4 = this.$refs.g4.draw({
+            id: "g4",
+            value: this.tweets.length,
+            title: "総投稿数",
+            defaults: this.dflt4,
+          })
+          console.log(g4)
+        } else {
+          let g5 = this.$refs.g5.draw({
+            id: "g5",
+            value: this.tweets.length,
+            title: "総投稿数",
+            defaults: this.dflt5,
+          })
+          console.log(g5)
+        }
       })
   },
 }
