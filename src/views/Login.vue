@@ -3,22 +3,31 @@
     <div class="main-content-out-box">
       <div class="main-content-in-box">
         <div id="login">
-          <h1>ログインページ</h1>
-          <div v-if="user">ログインしています</div>
-          <div v-else>ログインしていません</div>
-          <!-- <router-link to="/login"
-      ><button @click="logOut">ログアウト</button></router-link
-    > -->
-          <router-link to="/userprofile"
-            ><div @click="googleLogin">Googleログイン</div></router-link
-          >
-          <router-link to="/userprofile"
-            ><div @click="twitterLogin">Twitterログイン</div></router-link
-          >
-          <router-link to="/userprofile"
-            ><div @click="facebookLogin">Facebookログイン</div></router-link
-          >
-          <router-view />
+          <div class="isLogin-box">
+            <div v-if="user">ログインしています</div>
+            <div v-else>ログインしていません</div>
+          </div>
+          <div class="login-box">
+            <div class="google-login-box" @click="googleLogin">
+              <img src="@/assets/GoogleLogin.png" />
+            </div>
+            <div class="twitter-login-box" @click="twitterLogin">
+              <img src="@/assets/TwitterLogin.png" />
+            </div>
+            <div class="facebook-login-box" @click="facebookLogin">
+              <img src="@/assets/FacebookLogin.png" />
+            </div>
+            <!-- <router-link to="/userprofile"
+              ><div @click="googleLogin">Googleログイン</div></router-link
+            >
+            <router-link to="/userprofile"
+              ><div @click="twitterLogin">Twitterログイン</div></router-link
+            >
+            <router-link to="/userprofile"
+              ><div @click="facebookLogin">Facebookログイン</div></router-link
+            > -->
+            <router-view />
+          </div>
         </div>
       </div>
     </div>
@@ -118,5 +127,44 @@ export default {
   min-height: 65vh;
   margin-left: 5vw;
   background-color: rgb(112, 190, 160);
+}
+.isLogin-box {
+  font-size: 3rem;
+  justify-content: center;
+  text-align: center;
+  padding: 3%;
+}
+.google-login-box {
+  width: 40%;
+  height: 10%;
+  margin-left: 30%;
+  margin-bottom: 2%;
+}
+.google-login-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.twitter-login-box {
+  width: 40%;
+  height: 10%;
+  margin-left: 30%;
+  margin-bottom: 2%;
+}
+.twitter-login-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.facebook-login-box {
+  width: 40%;
+  height: 10%;
+  margin-left: 30%;
+  margin-bottom: 2%;
+}
+.facebook-login-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
