@@ -1,8 +1,6 @@
 <template>
   <div class="main-content-box">
-    あ
     <div class="main-content-out-box">
-      い
       <div class="main-content-in-box">
         <div class="search">
           <input
@@ -10,6 +8,7 @@
             v-model="inputValue"
             class="form-input"
             placeholder="どんなおにぎり？"
+            v-on:keydown.enter="search"
           />
           <img
             src="@/assets/lupe.png"
@@ -18,19 +17,25 @@
           />
 
           <div class="result">
-            <div v-for="tweet in result" :key="tweet.text">
+            <div
+              v-for="tweet in result"
+              :key="tweet.text"
+              class="tweetcontainer"
+            >
               <img v-bind:src="tweet.fileURL" class="tweet_image" />
 
               <ul class="tweettext">
                 <li>
                   {{ tweet.username }}
                 </li>
+                <br />
                 <li>
                   {{ tweet.text }}
                 </li>
-                {{
-                  tweet.place
-                }}
+                <br />
+                <li>
+                  {{ tweet.place }}
+                </li>
                 <li>
                   {{ tweet.hashtag }}
                 </li>
@@ -73,6 +78,7 @@ export default {
       firebase
         .firestore()
         .collection("tweets")
+        .orderBy("datetime", "desc")
         .get()
         .then((snapshot) => {
           snapshot.forEach((doc) => {
@@ -83,7 +89,7 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
 .main-content-box {
   width: 100vw;
   height: 100%;
@@ -110,31 +116,46 @@ export default {
   margin-left: 5vw;
   background-color: rgb(112, 190, 160);
 }
+.tweetcontainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
 .form-input {
   display: block;
   margin: auto;
   background-color: #cccccc;
   color: black;
-  width: 20vw;
+  width: 40vw;
   height: 3vw;
 }
 .form-input::placeholder {
   color: black;
 }
 .tweet_image {
-  display: block;
-  margin: auto;
-  width: 25vw;
-  height: 25vw;
-  border: solid 10px #000000;
+  margin-left: 6vw;
+  margin-bottom: 3vw;
+  /* display: block;  */
+  /* width: 25vw; */
+  /* height: 25vw; */
+  vertical-align: top;
+  width: 20vw;
+  height: 20vw;
+  border: solid 10px white;
+  -o-object-fit: cover;
+  object-fit: cover;
 }
 ul {
   list-style: none;
 }
 .tweettext {
-  text-align: center;
-  padding: 0.5em 1em;
-  margin: 2em 0;
+  margin-right: 6vw;
+  align-content: center;
+  height: 20vw;
+  width: 25vw;
+
+  padding: 0.5em 1.5em;
+
   color: #5d627b;
   background: white;
   border-top: solid 5px #5d627b;
