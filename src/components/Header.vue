@@ -174,8 +174,8 @@ export default {
   text-align: center;
 }
 .onigiri-link img {
-  width: 7vw;
-  height: 6.5vw;
+  width: 6vw;
+  height: 5.5vw;
   object-fit: cover;
 }
 .text-link {
