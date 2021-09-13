@@ -1,11 +1,22 @@
 <template>
-  <div class="main-box">
+  <div class="page-box">
     <div class="header-content">
       <div class="header-left-content">
         <div v-if="tweets.length < 100">
           <img src="@/assets/富士山イラスト.jpg" />
         </div>
-        <div v-else><img src="@/assets/富士山.jpg" /></div>
+        <div v-else-if="tweets.length < 200">
+          <img src="@/assets/富士山.jpg" />
+        </div>
+        <div v-else-if="tweets.length < 300">
+          <img src="@/assets/エベレスト.jpg" />
+        </div>
+        <div v-else-if="tweets.length < 400">
+          <img src="@/assets/月.png" />
+        </div>
+        <div v-else>
+          <img src="@/assets/ブラックホール.png" />
+        </div>
       </div>
       <div class="header-right-content">
         <div class="header-right-top-content">
@@ -127,7 +138,7 @@ export default {
 .header-right-content {
   width: 65%;
   height: 100%;
-  background-color: brown;
+  background-color: rgb(235, 129, 129);
 }
 .header-right-top-content {
   width: 100%;
