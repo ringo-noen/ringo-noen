@@ -5,7 +5,7 @@
         <div id="login">
           <div class="isLogin-box">
             <div v-if="user">ログインしています</div>
-            <div v-else>ログインしていません</div>
+            <div v-else>ログインしてください</div>
           </div>
           <div class="login-box">
             <div class="google-login-box" @click="googleLogin">
