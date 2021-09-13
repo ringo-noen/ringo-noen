@@ -1,83 +1,197 @@
 <template>
-  <div class="content-box">
-    <div class="calendar-left-box">
-      <div class="calendar-box">
-        <div class="calendar-title">{{ displayDate }}</div>
-        <div class="button-area">
-          <button @click="prevMonth">前の月</button>
-          <button @click="nextMonth">次の月</button>
-        </div>
-        <div class="calendar">
-          <div class="calendar-weekly">
-            <div class="calendar-youbi" v-for="n in 7" :key="n">
-              {{ youbi(n - 1) }}
-            </div>
-          </div>
-          <div
-            v-for="(week, index) in calendars"
-            :key="index"
-            class="calendar-weekly"
-          >
-            <div
-              v-for="(day, index) in week"
-              :key="index"
-              class="calendar-daily"
-              :class="{ outside: currentMonth !== day.month }"
-            >
-              <div class="calendar-day">
-                <div class="calendar-day-day">{{ day.day }}</div>
-                <br />
-                <div class="calendar-day-count" v-if="day.count > 0">
-                  <div class="calendar-day-count-img">
-                    <!-- <img src="@/assets/おにぎり2.jpeg" /> -->
-                    🍙
+  <div class="main-content-box">
+    <div class="main-content-out-box">
+      <div class="main-content-in-box">
+        <div class="content-box">
+          <div class="calendar-left-box">
+            <div class="calendar-box">
+              <div class="calendar-title">{{ displayDate }}</div>
+              <div class="button-area">
+                <button @click="prevMonth">前の月</button>
+                <button @click="nextMonth">次の月</button>
+              </div>
+              <div class="calendar">
+                <div class="calendar-weekly">
+                  <div class="calendar-youbi" v-for="n in 7" :key="n">
+                    {{ youbi(n - 1) }}
                   </div>
-                  ×{{ day.count }}
+                </div>
+                <div
+                  v-for="(week, index) in calendars"
+                  :key="index"
+                  class="calendar-weekly"
+                >
+                  <div
+                    v-for="(day, index) in week"
+                    :key="index"
+                    class="calendar-daily"
+                    :class="{ outside: currentMonth !== day.month }"
+                  >
+                    <div class="calendar-day">
+                      <div class="calendar-day-day">{{ day.day }}</div>
+                      <br />
+                      <div class="calendar-day-count" v-if="day.count > 0">
+                        <div class="calendar-day-count-img">
+                          <!-- <img src="@/assets/おにぎり2.jpeg" /> -->
+                          🍙
+                        </div>
+                        ×{{ day.count }}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="calendar-right-box">
-      <div class="calendar-right-top-box">
-        <div class="count">
-          <div class="count-title">現在のユーザ全体の総投稿数は...</div>
-          <div class="count-graph" v-if="tweets.length <= 100">
-            <vue-justgage
-              ref="g1"
-              id="g1"
-              width="50%"
-              class="gauge"
-            ></vue-justgage>
-          </div>
-          <div class="count-graph" v-else>
-            <vue-justgage
-              ref="g2"
-              id="g2"
-              width="50%"
-              class="gauge"
-            ></vue-justgage>
-          </div>
-        </div>
-      </div>
-      <div class="calendar-right-bottom-box">
-        <div class="calendar-right-bottom-left-box">
-          <div class="calendar-right-bottom-left-content">
-            <div class="calendar-right-bottom-left-title">
-              現在のランクは...
+          <div class="calendar-right-box">
+            <div class="calendar-right-top-box">
+              <div class="count">
+                <div class="count-title">現在のユーザ全体の総投稿数は...</div>
+                <!-- <div class="count-text">{{ tweets.length }}</div> -->
+                <div class="count-graph" v-if="tweets.length <= 100">
+                  <vue-justgage
+                    ref="g1"
+                    id="g1"
+                    width="30%"
+                    class="gauge"
+                  ></vue-justgage>
+                </div>
+                <div class="count-graph" v-else-if="tweets.length <= 200">
+                  <vue-justgage
+                    ref="g2"
+                    id="g2"
+                    width="30%"
+                    class="gauge"
+                  ></vue-justgage>
+                </div>
+                <div class="count-graph" v-else-if="tweets.length <= 300">
+                  <vue-justgage
+                    ref="g3"
+                    id="g3"
+                    width="30%"
+                    class="gauge"
+                  ></vue-justgage>
+                </div>
+                <div class="count-graph" v-else-if="tweets.length <= 400">
+                  <vue-justgage
+                    ref="g4"
+                    id="g4"
+                    width="30%"
+                    class="gauge"
+                  ></vue-justgage>
+                </div>
+                <div class="count-graph" v-else>
+                  <vue-justgage
+                    ref="g5"
+                    id="g5"
+                    width="30%"
+                    class="gauge"
+                  ></vue-justgage>
+                </div>
+              </div>
             </div>
-            <div class="calendar-right-bottom-img">
-              <img src="@/assets/富士山イラスト.jpg" />
-            </div>
-          </div>
-        </div>
-        <div class="calendar-right-bottom-right-box">
-          <div class="calendar-right-bottom-right-content">
-            <div class="calendar-right-bottom-right-title">次のランクは...</div>
-            <div class="calendar-right-bottom-img">
-              <img src="@/assets/富士山.jpg" />
+            <div class="calendar-right-bottom-box">
+              <div class="calendar-right-bottom-left-box">
+                <div
+                  class="calendar-right-bottom-left-content"
+                  v-if="tweets.length < 100"
+                >
+                  <div class="calendar-right-bottom-left-title">
+                    ランク：イラスト富士
+                  </div>
+                  <div class="calendar-right-bottom-img">
+                    <img src="@/assets/富士山イラスト.jpg" />
+                  </div>
+                </div>
+                <div
+                  class="calendar-right-bottom-left-content"
+                  v-else-if="tweets.length < 200"
+                >
+                  <div class="calendar-right-bottom-left-title">
+                    ランク：富士山
+                  </div>
+                  <div class="calendar-right-bottom-img">
+                    <img src="@/assets/富士山.jpg" />
+                  </div>
+                </div>
+                <div
+                  class="calendar-right-bottom-left-content"
+                  v-else-if="tweets.length < 300"
+                >
+                  <div class="calendar-right-bottom-left-title">
+                    ランク：エベレスト
+                  </div>
+                  <div class="calendar-right-bottom-img">
+                    <img src="@/assets/エベレスト.jpg" />
+                  </div>
+                </div>
+                <div
+                  class="calendar-right-bottom-left-content"
+                  v-else-if="tweets.length < 400"
+                >
+                  <div class="calendar-right-bottom-left-title">ランク：月</div>
+                  <div class="calendar-right-bottom-img">
+                    <img src="@/assets/月.png" />
+                  </div>
+                </div>
+                <div class="calendar-right-bottom-left-content" v-else>
+                  <div class="calendar-right-bottom-left-title">
+                    ランク：ブラックホール
+                  </div>
+                  <div class="calendar-right-bottom-img">
+                    <img src="@/assets/ブラックホール.png" />
+                  </div>
+                </div>
+              </div>
+              <div class="calendar-right-bottom-right-box">
+                <div
+                  class="calendar-right-bottom-right-content"
+                  v-if="tweets.length < 100"
+                >
+                  <div class="calendar-right-bottom-right-title">
+                    次のランク：富士山
+                  </div>
+                  <div class="calendar-right-bottom-img">
+                    <img src="@/assets/富士山.jpg" />
+                  </div>
+                </div>
+                <div
+                  class="calendar-right-bottom-right-content"
+                  v-else-if="tweets.length < 200"
+                >
+                  <div class="calendar-right-bottom-right-title">
+                    次のランクは：エベレスト
+                  </div>
+                  <div class="calendar-right-bottom-img">
+                    <img src="@/assets/エベレスト.jpg" />
+                  </div>
+                </div>
+                <div
+                  class="calendar-right-bottom-right-content"
+                  v-else-if="tweets.length < 300"
+                >
+                  <div class="calendar-right-bottom-right-title">
+                    次のランク：月
+                  </div>
+                  <div class="calendar-right-bottom-img">
+                    <img src="@/assets/月.png" />
+                  </div>
+                </div>
+                <div
+                  class="calendar-right-bottom-right-content"
+                  v-else-if="tweets.length < 400"
+                >
+                  <div class="calendar-right-bottom-right-title">
+                    次のランク：ブラックホール
+                  </div>
+                  <div class="calendar-right-bottom-img">
+                    <img src="@/assets/ブラックホール.png" />
+                  </div>
+                </div>
+                <div class="calendar-right-bottom-left-content" v-else>
+                  最高位のランクです
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -108,6 +222,30 @@ export default {
         hideInnerShadow: true,
       },
       dflt2: {
+        min: 0,
+        max: 200,
+        donut: false,
+        gaugeWidthScale: 0.6,
+        counter: true,
+        hideInnerShadow: true,
+      },
+      dflt3: {
+        min: 0,
+        max: 300,
+        donut: false,
+        gaugeWidthScale: 0.6,
+        counter: true,
+        hideInnerShadow: true,
+      },
+      dflt4: {
+        min: 0,
+        max: 400,
+        donut: false,
+        gaugeWidthScale: 0.6,
+        counter: true,
+        hideInnerShadow: true,
+      },
+      dflt5: {
         min: 0,
         max: 1000,
         donut: false,
@@ -240,23 +378,54 @@ export default {
 </script>
 
 <style>
+.main-content-box {
+  width: 100vw;
+  height: 100%;
+  min-height: 65vh;
+  /* width: 10vw;
+  height: 65vh; */
+  background-image: url("~@/assets/赤玉模様.png");
+  background-repeat: repeat;
+  background-size: 20%;
+  /* background-color: red; */
+  /* background-size: cover; */
+}
+.main-content-out-box {
+  width: 80vw;
+  height: 100%;
+  min-height: 65vh;
+  margin-left: 10vw;
+  background-color: black;
+}
+.main-content-in-box {
+  width: 70vw;
+  height: 100%;
+  min-height: 65vh;
+  margin-left: 5vw;
+  background-color: rgb(112, 190, 160);
+}
 .content-box {
+  width: 100%;
+  height: 100%;
   display: flex;
 }
 .calendar-left-box {
-  width: 55vw;
-  height: 70vh;
-  padding-left: 5rem;
+  width: 35vw;
+  height: 100%;
+  padding-left: 2vw;
+  padding-right: 1vw;
 }
 .calendar-right-box {
   width: 30vw;
-  height: 70vh;
-  padding-right: 5vw;
+  height: 100%;
+  padding-right: 2vw;
 }
 .calendar-box {
   /* margin: 2em auto; */
+  margin-top: 5%;
   padding: 3%;
   width: 80%;
+  background-color: white;
 }
 .button-area {
   display: flex;
@@ -269,11 +438,20 @@ export default {
   justify-content: center;
 }
 .calendar-box button {
-  width: 6rem;
-  height: 3rem;
-  font-size: 1.4rem;
+  width: 4rem;
+  height: 2rem;
+  font-size: 1rem;
   font-weight: bold;
   background-color: rgb(170, 241, 136);
+  border-radius: 5px;
+}
+.calendar-box button:hover {
+  width: 4rem;
+  height: 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: rgb(136, 211, 241);
+  border-radius: 5px;
 }
 .calendar {
   /* max-width: 57rem; */
@@ -297,8 +475,10 @@ export default {
 }
 .calendar-daily {
   flex: 1;
-  min-height: 6rem;
-  min-width: 6rem;
+  /* min-height: 4rem;
+  min-width: 4rem; */
+  max-height: 6rem;
+  max-width: 6rem;
   border-right: 1px solid #e0e0e0;
   border-bottom: 1px solid #e0e0e0;
   margin-right: -1px;
@@ -315,8 +495,33 @@ export default {
   border-left: 1px solid #e0e0e0;
 }
 .calendar-right-top-box {
-  width: 100%;
-  height: 40vh;
+  width: 90%;
+  height: 40%;
+  background-color: white;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+/* .count {
+  display: inline-block;
+  justify-content: center;
+} */
+.count-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 2%;
+  text-align: center;
+}
+.count-text {
+  font-size: 3rem;
+  font-weight: bold;
+  padding: 2%;
+  text-align: center;
+}
+.count-graph {
+  padding: 3%;
+  /* text-align: center;
+  display: flex;
+  justify-content: center; */
 }
 .calendar-right-bottom-box {
   display: block;
@@ -363,20 +568,11 @@ export default {
   object-fit: cover;
 }
 .calendar-right-bottom-left-title {
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: bold;
 }
 .calendar-right-bottom-right-title {
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: bold;
-}
-.count-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  padding: 3rem;
-  text-align: center;
-}
-.count-graph {
-  padding: 3%;
 }
 </style>
