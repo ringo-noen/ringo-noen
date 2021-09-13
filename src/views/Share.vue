@@ -3,7 +3,6 @@
     <div class="main-content-out-box">
       <div class="main-content-in-box">
         <div class="share-box">
-          <!-- <MainBox /> -->
           <div class="input-box">
             <div class="input-box-content">
               <div class="input-title">写真を選択</div>
@@ -62,12 +61,8 @@
 
 <script>
 import firebase from "firebase"
-// import MainBox from "@/components/MainBox.vue"
 
 export default {
-  components: {
-    // MainBox,
-  },
   data() {
     return {
       text: "",
@@ -184,7 +179,6 @@ export default {
   height: 98%;
   padding-top: 2%;
   padding-left: 5vw;
-  display: block;
 }
 .input-box-content {
   padding-bottom: 2vh;
