@@ -15,7 +15,6 @@
             class="form-button"
             v-on:click="search"
           />
-
           <div class="result">
             <div
               v-for="tweet in result"
@@ -94,13 +93,9 @@ export default {
   width: 100vw;
   height: 100%;
   min-height: 65vh;
-  /* width: 10vw;
-  height: 65vh; */
   background-image: url("~@/assets/赤玉模様.png");
   background-repeat: repeat;
   background-size: 20%;
-  /* background-color: red; */
-  /* background-size: cover; */
 }
 .main-content-out-box {
   width: 80vw;
@@ -135,9 +130,6 @@ export default {
 .tweet_image {
   margin-left: 6vw;
   margin-bottom: 3vw;
-  /* display: block;  */
-  /* width: 25vw; */
-  /* height: 25vw; */
   vertical-align: top;
   width: 20vw;
   height: 20vw;
@@ -153,9 +145,7 @@ ul {
   align-content: center;
   height: 20vw;
   width: 25vw;
-
   padding: 0.5em 1.5em;
-
   color: #5d627b;
   background: white;
   border-top: solid 5px #5d627b;

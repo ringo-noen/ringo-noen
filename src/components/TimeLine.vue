@@ -1,38 +1,24 @@
-
 <template>
   <div class="main-content-box">
-    
     <div class="main-content-out-box">
-      
       <div class="main-content-in-box">
-  <div class="form__wrapper">
-    <div class="text-content">
-      <p v-for="tweet in tweets" :key="tweet.id" class="tweetcontainer" >
-        <img v-bind:src="tweet.fileURL" class="tweet_image" />
-
-        <ul class="tweettext">
-          <li>
-          {{ tweet.username }}
-          </li>
-          <br>
-          <li>
-          {{ tweet.text }}
-          </li>
-          <br>
-          <li>
-          {{ tweet.place }}
-          </li>
-          <li>
-          {{ tweet.hashtag }}
-          </li>
-          <li>
-          {{ tweet.datetime }}
-          </li>
-        </ul>
-      </p>
-    </div>
-  </div>
-    </div>
+        <div class="form__wrapper">
+          <div class="text-content">
+            <div v-for="tweet in tweets" :key="tweet.id" class="tweetcontainer">
+              <img v-bind:src="tweet.fileURL" class="tweet_image" />
+              <ul class="tweettext">
+                <li>{{ tweet.username }}</li>
+                <br />
+                <li>{{ tweet.text }}</li>
+                <br />
+                <li>{{ tweet.place }}</li>
+                <li>{{ tweet.hashtag }}</li>
+                <li>{{ tweet.datetime }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -84,13 +70,9 @@ export default {
   width: 100vw;
   height: 100%;
   min-height: 65vh;
-  /* width: 10vw;
-  height: 65vh; */
   background-image: url("~@/assets/赤玉模様.png");
   background-repeat: repeat;
   background-size: 20%;
-  /* background-color: red; */
-  /* background-size: cover; */
 }
 .main-content-out-box {
   width: 80vw;
@@ -106,12 +88,10 @@ export default {
   margin-left: 5vw;
   background-color: rgb(112, 190, 160);
 }
-.tweetcontainer  {
-  display:flex;
+.tweetcontainer {
+  display: flex;
   justify-content: center;
   width: 100%;
-  
-
 }
 .form__wrapper {
   padding: 1rem;
@@ -120,20 +100,16 @@ export default {
   padding-left: 0;
   padding-right: 0;
   margin-bottom: 50px;
-   
 }
 ul {
   list-style: none;
 }
 .tweettext {
- 
   margin-right: 6vw;
- align-content: center;
- height: 20vw;
- width: 25vw;
-
+  align-content: center;
+  height: 20vw;
+  width: 25vw;
   padding: 0.5em 1.5em;
-
   color: #5d627b;
   background: white;
   border-top: solid 5px #5d627b;
@@ -142,16 +118,12 @@ ul {
 
 .tweet_image {
   margin-left: 6vw;
-  margin-bottom:3vw;
-  /* display: block;  */
-  /* width: 25vw; */
-  /* height: 25vw; */
+  margin-bottom: 3vw;
   vertical-align: top;
   width: 20vw;
   height: 20vw;
-  border: solid 10px white; 
+  border: solid 10px white;
   -o-object-fit: cover;
   object-fit: cover;
-
 }
 </style>
