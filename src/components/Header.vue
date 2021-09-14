@@ -138,7 +138,7 @@ export default {
 .header-right-content {
   width: 65%;
   height: 100%;
-  background-color: rgb(235, 129, 129);
+  background-color: rgb(172, 59, 59);
 }
 .header-right-top-content {
   width: 100%;
