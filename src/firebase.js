@@ -4,13 +4,13 @@ import "firebase/firestore"
 import "firebase/auth"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAwSGJ9EReJ3DgAQmWgTGpTohKm-o5A-mM",
-  authDomain: "ringo-noen.firebaseapp.com",
-  projectId: "ringo-noen",
-  storageBucket: "ringo-noen.appspot.com",
-  messagingSenderId: "30089329752",
-  appId: "1:30089329752:web:41ea6487f88404a9a69e2d",
-  measurementId: "G-Y668Q8MJ2E",
+  apiKey: "AIzaSyCXX3_JgUt4gDsNLD4fxUVcCoH14aA0ojA",
+  authDomain: "onigiri-hunter-15483.firebaseapp.com",
+  projectId: "onigiri-hunter-15483",
+  storageBucket: "onigiri-hunter-15483.appspot.com",
+  messagingSenderId: "264220307711",
+  appId: "1:264220307711:web:e7fe74825af00543721cca",
+  measurementId: "G-P4MZCSG3GW",
 }
 
 firebase.initializeApp(firebaseConfig)
