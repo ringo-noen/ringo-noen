@@ -58,6 +58,7 @@ export default {
       .firestore()
       .collection("tweets")
       .orderBy("datetime", "desc")
+      .limit(20)
       .get()
       .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
